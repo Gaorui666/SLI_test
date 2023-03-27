@@ -13,7 +13,7 @@ using namespace std;
 
 int main() {
 	char filename[50];
-	// ×¢ÒâÎÄ¼şÂ·¾¶ºÍÄãËù¶ÔÓ¦µÄÍ¼Æ¬
+	// æ³¨æ„æ–‡ä»¶è·¯å¾„å’Œä½ æ‰€å¯¹åº”çš„å›¾ç‰‡
 	Pattern obj;
 	int NSet[] = { 4,4,4,4,4,4,4,4 };
 	int fSet[] = { 1,2,4,8,12,16,24,32 };
@@ -30,130 +30,64 @@ int main() {
 	Mat TempPhase(480, 640, CV_64F, Scalar::all(0));
 	Mat k(480, 640, CV_64F, Scalar::all(0));
 
-	int Freqlevel = sizeof(fSet) / sizeof(fSet[0]);   //ÆµÂÊÊı
+	int Freqlevel = sizeof(fSet) / sizeof(fSet[0]);   //é¢‘ç‡æ•°
 
-	for (int i = 0; i < Freqlevel; i++)//±éÀú¸÷¸öÆµÂÊ
+	for (int i = 0; i < Freqlevel; i++)//éå†å„ä¸ªé¢‘ç‡
 	{
 
-		int F = *(fSet + i); //Ä³Ò»¸öÆµÂÊÖµ	
-		int N = *(NSet + i); //¸ÃÆµÂÊ¶ÔÓ¦µÄn·ùÍ¼
-		//! ÎªÊ²Ã´ÔÚÕâÀï°Ñobj.Psin.zerosÊÇÎŞ·¨ÖÃÁãµÄÄØ£¿
-		cout << " ÆµÂÊÏÖÔÚÊÇ" << *(fSet + i) << "¸ÃÆµÂÊ¶ÔÓ¦µÄÍ¼Æ¬ÊıÊÇ" << *(NSet + i) << endl;
+		int F = *(fSet + i); //æŸä¸€ä¸ªé¢‘ç‡å€¼	
+		int N = *(NSet + i); //è¯¥é¢‘ç‡å¯¹åº”çš„nå¹…å›¾
+		//! ä¸ºä»€ä¹ˆåœ¨è¿™é‡ŒæŠŠobj.Psin.zerosæ˜¯æ— æ³•ç½®é›¶çš„å‘¢ï¼Ÿ
+		cout << " é¢‘ç‡ç°åœ¨æ˜¯" << *(fSet + i) << "è¯¥é¢‘ç‡å¯¹åº”çš„å›¾ç‰‡æ•°æ˜¯" << *(NSet + i) << endl;
 
-		//¶ÁÈëÄ³¸öF¶ÔÓ¦µÄN·ùÍ¼Æ¬£¬²¢¼ÆËãPsinºÍPcos
+		//è¯»å…¥æŸä¸ªFå¯¹åº”çš„Nå¹…å›¾ç‰‡ï¼Œå¹¶è®¡ç®—Psinå’ŒPcos
 		for (int j = 0; j < N; j++)
 		{
 			int kk = i * N + j;
 			sprintf_s(filename, "D:\\GAORUI\\code\\original_data\\%04d.bmp", kk);
-			cout << "ÏÖÔÚ¶ÁµÄÊÇ000" << kk << "Í¼" << endl;
-			obj.Img = imread(filename);  //»ñÈ¡Í¬Ò»ÆµÂÊÏÂ¶ÔÓ¦µÄ¶à·ùÀïµÄÄ³ÕÅÍ¼
+			cout << "ç°åœ¨è¯»çš„æ˜¯000" << kk << "å›¾" << endl;
+			obj.Img = imread(filename);  //è·å–åŒä¸€é¢‘ç‡ä¸‹å¯¹åº”çš„å¤šå¹…é‡Œçš„æŸå¼ å›¾
 			obj.Get_W_H();
 			obj.Mat8UC3To8U();
 			obj.Mat8UTo32F();
-			/*
-			//namedWindow("Img_one", 1);
-			//namedWindow("Img_split[1]", 1);
-			//namedWindow("Img_split[2]", 1);
-			//imshow("Img_one", Img_one);
-			//imshow("Img_split[1]", Img_split[1]);
-			//imshow("Img_split[2]", Img_split[2]);
-			//waitKey(0);
-			//
-			//
-			//
-			//°ÑMat×ª»»³Éarray
-			// Array(r_Img * c_Img);
-			//array Img_1=
-			//Pcos = Psin + Img * 2;
-			//vector<uchar> array(r_Img* c_Img);
-			//°Ñmat×ª»»³ÉÒ»Î¬Êı×é
-			//uchar* array = new uchar[Img.rows * Img.cols];
-			*/
-			//°ÑmatµÄÊı¾İÀàĞÍ´ÓCV_8UC(n)×ªµ½CV_32FC(n)£¬
-			//ÆäÖĞ8UÎªUnsigned 8bits uchar 0~255£¬32FÎªFloat 32bits float 3.4E38¡«3.4E38
-			//Mat Img_f;
-			//Img_one.convertTo(Img_f, CV_32F);//!!!!ÕâÀïĞŞ¸Ä³É±ÈÀıÒò×ÓÊÇ1
-			//namedWindow("Img_float", 1);
-			//imshow("Img_float", Img_f);
-			//waitKey(0);
-			//int s = Img_f.channels();
-			//int flag_Img = Img_f.flags;
-			//int Img_f_type = Img_f.type();
-			//cout << "Img_fµÄchannelsÊÇ" << s << endl;
-			//cout << "Img_fµÄflagsÊÇ" << flag_Img << endl;
-			//cout << "Img_oneµÄtypeÊÇ" << Img_one.type() << endl;
-			//cout << "Img_fµÄtypeÊÇ" << Img_f_type << endl;
-			//cout << "===========Psin==================" << endl;
 			obj.Psin_Pcos(F,j,N);
-			/*==========================================================================
-			for (int mm = 0; mm < Img_f.cols; mm++)
-			{
-				cout << Psin.at<float>(0, mm) << "\t";
-			}
-			cout << "=============Pcos================" << endl;
-			===========================================================================*/
-			/*================================================================================
-			for (int mm = 0; mm < Img_f.cols; mm++)
-			{
-				cout << Pcos.at<float>(0, mm) << "\t";
-			}
-			===============================================================================*/
 
 			if (F == 1)
 			{
 				Ac = Ac + obj.Img_32F;
-				/*================================================================================
-				cout << "================Ac=============" << endl;
-				for (int mm = 0; mm < Img_f.cols; mm++)
-				{
-					cout << Ac.at<float>(0, mm) << "\t";
-				}
-				===============================================================================*/
+
 			}
 
 		}
 
 		if (F == 1)
 		{
-			//±éÀúÃ¿Ò»¸öÔªËØ¼ÆËãÏàÎ»Öµ
-			for (int ii = 0; ii < obj.height; ii++)  //r_Img=480ĞĞ
+			//éå†æ¯ä¸€ä¸ªå…ƒç´ è®¡ç®—ç›¸ä½å€¼
+			for (int ii = 0; ii < obj.height; ii++)  //r_Img=480è¡Œ
 			{
 				for (int jj = 0; jj < obj.width; jj++)
 				{
 					Phase.at<double>(ii, jj) = atan2(-obj.Psin.at<double>(ii, jj), -obj.Pcos.at<double>(ii, jj)) + M_PI;	
-					//cout << "Psin.at<float>Öµ=" << obj.Psin.at<float>(ii, jj) << endl;
-					//cout << "Pcos.at<float>Öµ=" << obj.Pcos.at<float>(ii, jj) << endl;
-					//cout << "atan2(-Psin.at<float>(ii, jj), -Pcos.at<float>(ii, jj))=" << atan2(-obj.Psin.at<float>(ii, jj), -obj.Pcos.at<float>(ii, jj)) << endl;
-					//cout << "atan2(Psin.at<float>(ii, jj), Pcos.at<float>(ii, jj))=" << atan2(obj.Psin.at<float>(ii, jj), obj.Pcos.at<float>(ii, jj)) << endl;
-					//cout << "atan2(-1*Psin.at<float>(ii, jj), -1*Pcos.at<float>(ii, jj))=" << atan2(-1 * obj.Psin.at<float>(ii, jj), -1 * obj.Pcos.at<float>(ii, jj)) << endl;
-
+					
 				}
 			}
 			Ac = Ac / N;
-			// sqrt( A, B)µÄ½âÊÍÎª½«¾ØÕóA¿ªÆ½·½½á¹û·Åµ½¾ØÕóBÖĞ£¬²»ĞèÒªÖØĞÂ¸³Öµ¡£
+			// sqrt( A, B)çš„è§£é‡Šä¸ºå°†çŸ©é˜µAå¼€å¹³æ–¹ç»“æœæ”¾åˆ°çŸ©é˜µBä¸­ï¼Œä¸éœ€è¦é‡æ–°èµ‹å€¼ã€‚
 			sqrt(obj.Psin.mul(obj.Psin) + obj.Pcos.mul(obj.Pcos), Bc);
 			Bc = 2.0 / N * Bc;
 
-			/*=============================================================================
-			cout << "================Phase(F=1)=============" << endl;
-			for (int mm = 0; mm < Img_f.cols; mm++)
-			{
-				cout << Phase.at<float>(0, mm) << "\t";
-			}
-			=============================================================================*/
 		}
 		else
 		{
-			//¼ÆËã³öÃ¿Ò»µãµÄTempPhase
+			//è®¡ç®—å‡ºæ¯ä¸€ç‚¹çš„TempPhase
 			for (int ii = 0; ii < obj.height; ii++)
 			{
 				for (int jj = 0; jj < obj.width; jj++)
 				{
-					//cout << "Psin.at<float>"<<"("<<ii<<","<<jj<<")ÓëPcos: " << obj.Psin.at<float>(ii, jj)<<"\t" << obj.Pcos.at<float>(ii,jj)<< endl;
+					//cout << "Psin.at<float>"<<"("<<ii<<","<<jj<<")ä¸Pcos: " << obj.Psin.at<float>(ii, jj)<<"\t" << obj.Pcos.at<float>(ii,jj)<< endl;
 					TempPhase.at<double>(ii, jj) = atan2(-obj.Psin.at<double>(ii, jj), -obj.Pcos.at<double>(ii, jj)) + M_PI;
 					k.at<double>(ii, jj) = round((F * Phase.at<double>(ii, jj) - TempPhase.at<double>(ii, jj)) / (2 * M_PI));
-					//cout << "TempPhase.at<float>(ii,jj)=" << TempPhase.at<float>(ii, jj) << endl;
-					//cout << "k(ii,jj)=" << k.at<float>(ii, jj) << endl;
+
 
 				}
 			}
@@ -163,24 +97,18 @@ int main() {
 			//namedWindow("P_TEST");
 			//imshow("P_TEST", P_TEST);
 			//waitKey(0);
-			/*================================================================================
-			cout << "================Phase(F=else)=============" << endl;
-			for (int mm = 0; mm < Img_f.cols; mm++)
-			{
-				cout << Phase.at<float>(0, mm) << "\t";
-			}
-			================================================================================*/
+
 		}
 
 	}
 
 	imshow_float(Ac, Bc, Phase);
 	filter_Kernel(Bc, Phase, Ac, Bc);
-	/*ÏÂÃæÑéÖ¤ÁËÉÏÊöÑÚÄ¤¶ÔPhaseÔÚ¸Ãº¯ÊıÍâ¼°ºóĞøµÄÓ¦ÓÃÊÇÑÚÄ¤±ä»¯ºóµÄ*/
+	/*ä¸‹é¢éªŒè¯äº†ä¸Šè¿°æ©è†œå¯¹Phaseåœ¨è¯¥å‡½æ•°å¤–åŠåç»­çš„åº”ç”¨æ˜¯æ©è†œå˜åŒ–åçš„*/
 	//double test_MinValue, test_MaxValue;
 	//minMaxLoc(Phase, &test_MinValue, &test_MaxValue, 0, 0);
-	//cout << "MinValue=" << test_MinValue << "ÒÔ¼°" << "MaxValue=" << test_MaxValue << endl;
-	pointcloud(CameraM, ProjectorM, obj, Phase);  //´«ÈëĞ£×¼¾ØÕó
+	//cout << "MinValue=" << test_MinValue << "ä»¥åŠ" << "MaxValue=" << test_MaxValue << endl;
+	pointcloud(CameraM, ProjectorM, obj, Phase);  //ä¼ å…¥æ ¡å‡†çŸ©é˜µ
 
 	obj.Func_Save();
 	obj.Func_SaveAsBMP(Ac, 1, 1);
