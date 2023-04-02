@@ -24,8 +24,8 @@ Pattern pointcloud(Mat& Mc,Mat& Mp,Pattern& object,Mat& Phase)  //传入校准矩阵
 
 	}
 	//至此形成了图案xc和yc的行列矩阵
-	cout << "Mc.at<float>(0, 0)" << Mc.at<double>(0, 0) << endl;
-	cout << "Mc.at<float>(2, 0)" << Mc.at<double>(2, 0) << endl;
+	cout << "Mc.at<double>(0, 0)" << Mc.at<double>(0, 0) << endl;
+	cout << "Mc.at<double>(2, 0)" << Mc.at<double>(2, 0) << endl;
 
 	Mat C11 = Mc.at<double>(0, 0) - Mc.at<double>(2, 0) * orig_xc;
 	Mat C12 = Mc.at<double>(0, 1) - Mc.at<double>(2, 1) * orig_xc;

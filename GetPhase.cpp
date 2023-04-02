@@ -1,11 +1,13 @@
 #include "GetPhase.h"
 #include"show_randc.h"
+#include"SaveTxt.h"
 
 void Pattern::Get_W_H()
 {
 	height = Img.rows;
 	width = Img.cols;
 }
+
 Mat Pattern::Mat8UC3To8U() //将三通道的图像Mat变成单通道，才能进行后续计算
 {
 	split(Img, Img_split);
@@ -38,27 +40,6 @@ void Pattern::Psin_Pcos(int& f,int& num,int& N)
 		Pcos = Pcos + Img_32F * cos(2 * M_PI * num / N);
 
 }
-void Pattern::Func_file(char* s,Mat& Input_64F)
-{
-	Mat InputMat;
-	Input_64F.convertTo(InputMat, CV_32F);
-	FILE* fp;
-	errno_t err; char FileName[50];
-	sprintf_s(FileName, "D:\\GAORUI\\code\\original_data\\%s.byt", s);
-	err = fopen_s(&fp, FileName, "wb");
-	if (err == 1)
-	{
-		cout << "fopen error" << endl;
-	}
-	else
-	{
-		cout << "sizeof(float)=" << sizeof(float) << endl;
-		cout << "InputMat.rows=" << InputMat.rows << endl;
-
-		fwrite(InputMat.data, sizeof(float), InputMat.rows, fp);
-		fclose(fp);
-	}
-}
 void Pattern::Func_SaveAsBMP(Mat& InputMat,int Scale1No0,int n)
 {
 	if (Scale1No0 == 1)  //按照最大最小值比例放缩
@@ -79,12 +60,12 @@ void Pattern::Func_SaveAsBMP(Mat& InputMat,int Scale1No0,int n)
 		//}
 		if (n == 1)
 		{
-			string file_name = "D:\\GAORUI\\code\\original_data\\TESTC.bmp";
+			string file_name = "..\\original_data\\TESTC.bmp";
 			imwrite(file_name, end);
 		}
 		else
 		{
-			string file_name = "D:\\GAORUI\\code\\original_data\\TESTI.bmp";
+			string file_name = "..\\original_data\\TESTI.bmp";
 			imwrite(file_name, end);
 		}
 
@@ -96,18 +77,40 @@ void Pattern::Func_SaveAsBMP(Mat& InputMat,int Scale1No0,int n)
 		InputMat.convertTo(end, CV_8U);//convertTo包含取整的功能
 		if (n == 1)
 		{
-			string file_name = "D:\\GAORUI\\code\\original_data\\TESTC.bmp";
+			string file_name = "..\\original_data\\TESTC.bmp";
 			imwrite(file_name, end);
 		}
 		else
 		{
-			string file_name = "D:\\GAORUI\\code\\original_data\\TESTI.bmp";
+			string file_name = "..\\original_data\\TESTI.bmp";
 			imwrite(file_name, end);
 		}
 		
 	}
 
 }
+void Pattern::Func_file(char* s,Mat& Input_64F)
+{
+	Mat InputMat;
+	Input_64F.convertTo(InputMat, CV_32F);
+	FILE* fp;
+	errno_t err; char FileName[100];
+	sprintf_s(FileName, "..\\original_data\\%s.byt", s);
+	err = fopen_s(&fp, FileName, "wb");
+	if (err == 1)
+	{
+		cout << "fopen error!" << endl;
+	}
+	else
+	{
+		cout << "sizeof(float)=" << sizeof(float) << endl;
+		cout << "InputMat.rows=" << InputMat.rows << endl;
+
+		fwrite(InputMat.data, sizeof(float), InputMat.rows, fp);
+		fclose(fp);
+	}
+}
+
 void Pattern::Func_Save()
 {
 	//string name_5 = "obj.X";   //显示C矩阵求倒数行列式第100列
@@ -115,18 +118,18 @@ void Pattern::Func_Save()
 	//Show_rowandcol(X, 0, 99, name_5);
 	//Show_rowandcol(X, 1, 0, name_5);
 	//Show_rowandcol(X, 1, 99, name_5);
-	Mat X_1 = X.t();
-	Mat X_end = X_1.reshape(0, 1).t();
+	
+	Mat X_end = X.reshape(0, 1).t();
 	//cout << "\nX变成一维列向量后的数据" << endl;
 	//for (int kk = 0; kk < 1440; kk++)
 	//{
 	//	cout << X_end.at<double>(kk) << endl;;
 	//}
 	//这里发现X有非常大1890的值或者-200的值，但是对应的matlab里最大最小值是40 -40左右
-	Mat Y_1 = Y.t();
-	Mat Y_end = Y_1.reshape(0, 1).t();
-	Mat Z_1 = Z.t();
-	Mat Z_end = Z_1.reshape(0, 1).t();
+	
+	Mat Y_end = Y.reshape(0, 1).t();
+	Mat Z_end = Z.reshape(0, 1).t();
+
 	char s_X[] = "TESTX";
 	char s_Y[] = "TESTY";
 	char s_Z[] = "TESTZ";
