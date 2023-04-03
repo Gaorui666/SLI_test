@@ -4,13 +4,13 @@ vector<int> Pattern_num;
 
 vector<int> StrToVec(string& str)
 {
-	vector<int> res;   //´æ´¢·Ö¸îºóµÄdoubleÊý¾Ý
-	stringstream InputS(str);  //ÄÇstr1´«Èëµ½×Ö·û´®Á÷
+	vector<int> res;   //å­˜å‚¨åˆ†å‰²åŽçš„doubleæ•°æ®
+	stringstream InputS(str);  //é‚£str1ä¼ å…¥åˆ°å­—ç¬¦ä¸²æµ
 	string Temp;
 	while (getline(InputS, Temp, ','))
 	{
 		int n;
-		stringstream TempInputS(Temp);  //°Ñstr1´«Èëµ½×Ö·û´®Á÷
+		stringstream TempInputS(Temp);  //æŠŠstr1ä¼ å…¥åˆ°å­—ç¬¦ä¸²æµ
 		TempInputS >> n;
 		res.push_back(n);
 	}
@@ -29,24 +29,9 @@ vector<int> StrToVec(string& str)
 	}
 	else
 
-		while (!InFile.eof())   //Ã»ÓÐµ½´ïÎÄ¼þÄ©Î²
+		while (!InFile.eof())   //æ²¡æœ‰åˆ°è¾¾æ–‡ä»¶æœ«å°¾
 		{
-			//InFile.seekg(0, ios::end);
-			//static int length = InFile.tellg();  //»ñÈ¡ÎÄ¼þµÄ³¤¶È
-			//string str(length,'\0');
-			// 
-			// 
-			//double n;
-			//InFile.ignore(std::numeric_limits<std::streamsize>::max(), '[');
-			//char mc[800];
-			//InFile.getline(mc, 800, ']');
-			//cout << mc << endl;
-			//InFile.ignore(std::numeric_limits<std::streamsize>::max(), '[');
-			//char mp[800];
-			//InFile.getline(mp, 800, ']');
-			//cout << mp << endl;
-			//InFile >> n;
-			//cout << n << endl;
+			
 			InFile.ignore(std::numeric_limits<std::streamsize>::max(), '[');
 			//string str1;
 			getline(InFile, str1, ']');
@@ -59,8 +44,7 @@ vector<int> StrToVec(string& str)
 			//cout << str2 << endl;
 			break;
 
-			//string Temp
-			/*while(getline(InputS,Temp,','))*/
+
 		}
 	Pattern_num = StrToVec(str1);
 	Freq = StrToVec(str2);
