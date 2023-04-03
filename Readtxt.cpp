@@ -1,58 +1,21 @@
 #include"Readtxt.h"
-//Mat Readtxt(char* path)
-//{
-//	Mat MM;
-//	FILE* fp;
-//	errno_t err;
-//	err = fopen_s(&fp, path, "r");
-//	if (err == 1)
-//		cout << "fread failed!" << endl;
-//	else
-//	{
-//		fread_s()
-//	}
-//}
+
 Mat CameraM;
 Mat ProjectorM;
-string testsss = "sdddddddddddd";
-//Mat StrToMat(string& str,Mat& Input_res)
-//{
-//	vector<double> res;   //´æ´¢·Ö¸îºóµÄdoubleÊý¾Ý
-//	stringstream InputS(str);  //ÄÇstr1´«Èëµ½×Ö·û´®Á÷
-//	string Temp;
-//	while (getline(InputS, Temp, ','))
-//	{
-//		double n;
-//		stringstream TempInputS(Temp);  //°Ñstr1´«Èëµ½×Ö·û´®Á÷
-//		TempInputS >> n;
-//		res.push_back(n);
-//	}
-//	//for (int i = 0; i < res.size(); i++)
-//	//	cout << "mcµÚ" << i + 1 << "¸öÊÇ" << res[i] << endl;
-//	Mat M = Mat(res).reshape(0, 3);
-//	for (int ii = 0; ii < M.rows; ii++)
-//	{
-//		for (int jj = 0; jj < M.cols; jj++)
-//			cout << M.at<double>(ii, jj)<<"\t";
-//		cout << endl;
-//	}
-//	M.copyTo(Input_res);
-//	return Input_res;
-//}
 Mat StrToMat(string& str, Mat& Input_res)
 {
-	vector<double> res;   //´æ´¢·Ö¸îºóµÄdoubleÊý¾Ý
-	stringstream InputS(str);  //ÄÇstr1´«Èëµ½×Ö·û´®Á÷
+	vector<double> res;   //å­˜å‚¨åˆ†å‰²åŽçš„doubleæ•°æ®
+	stringstream InputS(str);  //é‚£str1ä¼ å…¥åˆ°å­—ç¬¦ä¸²æµ
 	string Temp;
 	while (getline(InputS, Temp, ','))
 	{
 		double n;
-		stringstream TempInputS(Temp);  //°Ñstr1´«Èëµ½×Ö·û´®Á÷
+		stringstream TempInputS(Temp);  //æŠŠstr1ä¼ å…¥åˆ°å­—ç¬¦ä¸²æµ
 		TempInputS >> n;
 		res.push_back(n);
 	}
 	//for (int i = 0; i < res.size(); i++)
-	//	cout << "mcµÚ" << i + 1 << "¸öÊÇ" << res[i] << endl;
+	//	cout << "mcç¬¬" << i + 1 << "ä¸ªæ˜¯" << res[i] << endl;
 	Mat M= Mat(res).reshape(0, 3);  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	for (int ii = 0; ii < M.rows; ii++)
 	{
@@ -76,24 +39,9 @@ void Readtxt(char* path)
 	}
 	else
 
-		while (!InFile.eof())   //Ã»ÓÐµ½´ïÎÄ¼þÄ©Î²
+		while (!InFile.eof())   //æ²¡æœ‰åˆ°è¾¾æ–‡ä»¶æœ«å°¾
 		{
-			//InFile.seekg(0, ios::end);
-			//static int length = InFile.tellg();  //»ñÈ¡ÎÄ¼þµÄ³¤¶È
-			//string str(length,'\0');
-			// 
-			// 
-			//double n;
-			//InFile.ignore(std::numeric_limits<std::streamsize>::max(), '[');
-			//char mc[800];
-			//InFile.getline(mc, 800, ']');
-			//cout << mc << endl;
-			//InFile.ignore(std::numeric_limits<std::streamsize>::max(), '[');
-			//char mp[800];
-			//InFile.getline(mp, 800, ']');
-			//cout << mp << endl;
-			//InFile >> n;
-			//cout << n << endl;
+			
 			InFile.ignore(std::numeric_limits<std::streamsize>::max(), '[');
 			//string str1;
 			getline(InFile, str1, ']');
@@ -106,17 +54,16 @@ void Readtxt(char* path)
 			//cout << str2 << endl;
 			break;
 			
-			//string Temp
-			/*while(getline(InputS,Temp,','))*/
+
 		}
 	StrToMat(str1, CameraM);
 	StrToMat(str2, ProjectorM);
-	//ÉÏÊöÖÐµÄStrToMat²»¼ÓInput_res¶øÊÇÔÚÕâÀïÊ¹ÓÃcopyToµ½CameraMÊ±...
-	//ÔÚÕâÀï¹Û²ìCamersaMÊ±½á¹û¾ÍÒÑ¾­²»ÊÇÏ£ÍûµÄÖµÁË,ÔÚStrToMatµÄ²ÎÊýÖÐÌí¼ÓCameraMÔò¿ÉÒÔ³É¹¦
-	//»òÕßÖ»ÊÇ°ÑStrToMatµÄM²»ÊÇ¼òµ¥¸³Öµ¶øÊÇ²ÉÓÃcloneÒ²¿ÉÒÔ½«ÖµÕýÈ·´«µ½Ð£×¼ÖÐ
-	//µ«ÊÇ²ÉÓÃÈ«¾ÖstringÊ±¾Í¿ÉÒÔÕý³£
+	//ä¸Šè¿°ä¸­çš„StrToMatä¸åŠ Input_resè€Œæ˜¯åœ¨è¿™é‡Œä½¿ç”¨copyToåˆ°CameraMæ—¶...
+	//åœ¨è¿™é‡Œè§‚å¯ŸCamersaMæ—¶ç»“æžœå°±å·²ç»ä¸æ˜¯å¸Œæœ›çš„å€¼äº†,åœ¨StrToMatçš„å‚æ•°ä¸­æ·»åŠ CameraMåˆ™å¯ä»¥æˆåŠŸ
+	//æˆ–è€…åªæ˜¯æŠŠStrToMatçš„Mä¸æ˜¯ç®€å•èµ‹å€¼è€Œæ˜¯é‡‡ç”¨cloneä¹Ÿå¯ä»¥å°†å€¼æ­£ç¡®ä¼ åˆ°æ ¡å‡†ä¸­
+	//ä½†æ˜¯é‡‡ç”¨å…¨å±€stringæ—¶å°±å¯ä»¥æ­£å¸¸
 	testsss = "change";
-	cout << "º¯ÊýÀïµÄtestsss" << testsss << endl;
+	cout << "å‡½æ•°é‡Œçš„testsss" << testsss << endl;
 	cout << "CAMERAm================================="<<endl;
 	for (int ii = 0; ii < CameraM.rows; ii++)
 	{
