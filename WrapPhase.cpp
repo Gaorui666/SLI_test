@@ -4,29 +4,29 @@
 
 Pattern WrapPhase(Pattern& Object, Mat& Ac, Mat& Bc, Mat& Phase,Mat& TempPhase,Mat& k)
 {
-	//°ÑÍ¼°¸ÊıÁ¿ºÍÆµÂÊvectorÈ«¾Ö±äÁ¿ÖØĞÂÃüÃû
+	//æŠŠå›¾æ¡ˆæ•°é‡å’Œé¢‘ç‡vectorå…¨å±€å˜é‡é‡æ–°å‘½å
 	vector<int>& NSet = Pattern_num;
 	vector<int>& fSet = Freq;
-	//»ñÈ¡ÆµÂÊÊıÁ¿£¬ÒÔ¼°¶¨ÒåÔ­Ê¼Êı¾İÏà¶Ô´æ´¢Â·¾¶
-	int Freqlevel = sizeof(fSet) / sizeof(fSet[0]);   //ÆµÂÊÊı
+	//è·å–é¢‘ç‡æ•°é‡ï¼Œä»¥åŠå®šä¹‰åŸå§‹æ•°æ®ç›¸å¯¹å­˜å‚¨è·¯å¾„
+	int Freqlevel = sizeof(fSet) / sizeof(fSet[0]);   //é¢‘ç‡æ•°
 	char filename[100];
 	const char filepath[100] = "..\\original_data\\%04d.bmp";
 
-	for (int i = 0; i < Freqlevel; i++)//±éÀú¸÷¸öÆµÂÊ
+	for (int i = 0; i < Freqlevel; i++)//éå†å„ä¸ªé¢‘ç‡
 	{
 
-		int F = *(fSet.data() + i); //Ä³Ò»¸öÆµÂÊÖµ	
-		int N = *(NSet.data() + i); //¸ÃÆµÂÊ¶ÔÓ¦µÄn·ùÍ¼
-		//! ÎªÊ²Ã´ÔÚÕâÀï°Ñobj.Psin.zerosÊÇÎŞ·¨ÖÃÁãµÄÄØ£¿
-		cout << " ÆµÂÊÏÖÔÚÊÇ" << *(fSet.data() + i) << "¸ÃÆµÂÊ¶ÔÓ¦µÄÍ¼Æ¬ÊıÊÇ" << *(NSet.data() + i) << endl;
+		int F = *(fSet.data() + i); //æŸä¸€ä¸ªé¢‘ç‡å€¼	
+		int N = *(NSet.data() + i); //è¯¥é¢‘ç‡å¯¹åº”çš„nå¹…å›¾
+		//! ä¸ºä»€ä¹ˆåœ¨è¿™é‡ŒæŠŠobj.Psin.zerosæ˜¯æ— æ³•ç½®é›¶çš„å‘¢ï¼Ÿ
+		cout << " é¢‘ç‡ç°åœ¨æ˜¯" << *(fSet.data() + i) << "è¯¥é¢‘ç‡å¯¹åº”çš„å›¾ç‰‡æ•°æ˜¯" << *(NSet.data() + i) << endl;
 
-		//¶ÁÈëÄ³¸öF¶ÔÓ¦µÄN·ùÍ¼Æ¬£¬²¢¼ÆËãPsinºÍPcos
+		//è¯»å…¥æŸä¸ªFå¯¹åº”çš„Nå¹…å›¾ç‰‡ï¼Œå¹¶è®¡ç®—Psinå’ŒPcos
 		for (int j = 0; j < N; j++)
 		{
 			int kk = i * N + j;
 			sprintf_s(filename, filepath, kk);
-			cout << "ÏÖÔÚ¶ÁµÄÊÇ000" << kk << "Í¼" << endl;
-			Object.Img = imread(filename);  //»ñÈ¡Í¬Ò»ÆµÂÊÏÂ¶ÔÓ¦µÄ¶à·ùÀïµÄÄ³ÕÅÍ¼
+			cout << "ç°åœ¨è¯»çš„æ˜¯000" << kk << "å›¾" << endl;
+			Object.Img = imread(filename);  //è·å–åŒä¸€é¢‘ç‡ä¸‹å¯¹åº”çš„å¤šå¹…é‡Œçš„æŸå¼ å›¾
 			Object.Get_W_H();
 			Object.Mat8UC3To8U();
 			Object.Mat8UTo32F();
@@ -41,8 +41,8 @@ Pattern WrapPhase(Pattern& Object, Mat& Ac, Mat& Bc, Mat& Phase,Mat& TempPhase,M
 
 		if (F == 1)
 		{
-			//±éÀúÃ¿Ò»¸öÔªËØ¼ÆËãÏàÎ»Öµ
-			for (int ii = 0; ii < Object.height; ii++)  //r_Img=480ĞĞ
+			//éå†æ¯ä¸€ä¸ªå…ƒç´ è®¡ç®—ç›¸ä½å€¼
+			for (int ii = 0; ii < Object.height; ii++)  //r_Img=480è¡Œ
 			{
 				for (int jj = 0; jj < Object.width; jj++)
 				{
@@ -51,23 +51,22 @@ Pattern WrapPhase(Pattern& Object, Mat& Ac, Mat& Bc, Mat& Phase,Mat& TempPhase,M
 				}
 			}
 			Ac = Ac / N;
-			// sqrt( A, B)µÄ½âÊÍÎª½«¾ØÕóA¿ªÆ½·½½á¹û·Åµ½¾ØÕóBÖĞ£¬²»ĞèÒªÖØĞÂ¸³Öµ¡£
+			// sqrt( A, B)çš„è§£é‡Šä¸ºå°†çŸ©é˜µAå¼€å¹³æ–¹ç»“æœæ”¾åˆ°çŸ©é˜µBä¸­ï¼Œä¸éœ€è¦é‡æ–°èµ‹å€¼ã€‚
 			sqrt(Object.Psin.mul(Object.Psin) + Object.Pcos.mul(Object.Pcos), Bc);
 			Bc = 2.0 / N * Bc;
 
 		}
 		else
 		{
-			//¼ÆËã³öÃ¿Ò»µãµÄTempPhase
+			//è®¡ç®—å‡ºæ¯ä¸€ç‚¹çš„TempPhase
 			for (int ii = 0; ii < Object.height; ii++)
 			{
 				for (int jj = 0; jj < Object.width; jj++)
 				{
-					//cout << "Psin.at<float>"<<"("<<ii<<","<<jj<<")ÓëPcos: " << obj.Psin.at<float>(ii, jj)<<"\t" << obj.Pcos.at<float>(ii,jj)<< endl;
+					//cout << "Psin.at<float>"<<"("<<ii<<","<<jj<<")ä¸Pcos: " << obj.Psin.at<float>(ii, jj)<<"\t" << obj.Pcos.at<float>(ii,jj)<< endl;
 					TempPhase.at<double>(ii, jj) = atan2(-Object.Psin.at<double>(ii, jj), -Object.Pcos.at<double>(ii, jj)) + M_PI;
 					k.at<double>(ii, jj) = round((F * Phase.at<double>(ii, jj) - TempPhase.at<double>(ii, jj)) / (2*M_PI));
-					//cout << "TempPhase.at<float>(ii,jj)=" << TempPhase.at<float>(ii, jj) << endl;
-					//cout << "k(ii,jj)=" << k.at<float>(ii, jj) << endl;
+
 
 				}
 			}
